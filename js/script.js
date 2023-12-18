@@ -51,14 +51,14 @@ function showPage(list, page) {
       // and also changes the number of page buttons based on the letter entered into the search bar
        const firstButton = document.querySelector('button');
          firstButton.setAttribute("class","active");
-         linkList.addEventListener('click',(e) =>{
-            if(e.target.tagName === 'BUTTON'){
+         linkList.addEventListener('click',(e) => {
+            if(e.target.tagName === 'BUTTON') {
                const removeButton = document.querySelector('.active');
                removeButton.className = '';
                const addButton = e.target;
                addButton.className = 'active';
                const display = addButton.textContent;
-               showPage(list,display);
+               showPage(list, display);
             } 
           });
       }    
