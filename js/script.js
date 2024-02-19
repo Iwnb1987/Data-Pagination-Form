@@ -41,10 +41,10 @@ function showPage(list, page) {
          }
 
 // This function waits for a click on the page numbers. Also changes the number of page buttons based on the letter entered into the search bar
-         (document.querySelector('button')).setAttribute("class","active");
+         document.querySelector('button').setAttribute("class","active");
          document.getElementsByClassName('link-list')[0].addEventListener('click',(e) => {
             if(e.target.tagName === 'BUTTON') {
-               (document.querySelector('.active')).className = '';
+               document.querySelector('.active').className = '';
                e.target.className = 'active';
                showPage(list, e.target.textContent);
             } 
