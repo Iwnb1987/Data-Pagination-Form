@@ -1,9 +1,7 @@
 // This function will creates 9 list items per page.
 function showPage(list, page) {
-   const startIndex = (page * 9) - 9;
    const endIndex = page * 9;
-   const studentList = document.getElementsByClassName('student-list')[0];
-   studentList.innerHTML = '';
+   document.getElementsByClassName('student-list')[0].innerHTML = '';
 
    let studentInfo = '';
    
@@ -12,7 +10,7 @@ function showPage(list, page) {
       studentInfo += `<p class="no-results"> No Results Found </p>`;
     } else {
        for (let i = 0; i < list.length; i++) {
-      if (i >= startIndex && i < endIndex) {
+      if (i >= (page * 9) - 9 && i < endIndex) {
          studentInfo += `
          <li class="student-item cf">        
             <div class="student-details">
@@ -28,81 +26,60 @@ function showPage(list, page) {
       }
       }
       }
-       studentList.insertAdjacentHTML("beforeend", studentInfo);
+       document.getElementsByClassName('student-list')[0].insertAdjacentHTML("beforeend", studentInfo);
       }
 
 
-// This is the pagination function that displays 9 per page
-// and contains a button to go to pages 1-5
+// This is the pagination function that displays 9 per page and contains a button to go to pages 1-5
    function addPagination(list) {
-         let numPage = Math.ceil(list.length / 9);
-         const linkList = document.getElementsByClassName('link-list')[0];
-         linkList.innerHTML = '';
-         
-         //loops through the addPagination variable 
-         for(let i = 1; i <= numPage; i++) {
-         linkList.insertAdjacentHTML('beforeend',
+         document.getElementsByClassName('link-list')[0].innerHTML = '';
+          for(let i = 1; i <= Math.ceil(list.length / 9); i++) {    //loops through the addPagination keyword
+         document.getElementsByClassName('link-list')[0].insertAdjacentHTML('beforeend',
          `<li>
             <button type="button">${i}</button>
          </li>`);
          }
 
-// This function waits for a click on the page numbers
-      // and also changes the number of page buttons based on the letter entered into the search bar
-       const firstButton = document.querySelector('button');
-         firstButton.setAttribute("class","active");
-         linkList.addEventListener('click',(e) => {
+// This function waits for a click on the page numbers. Also changes the number of page buttons based on the letter entered into the search bar
+         (document.querySelector('button')).setAttribute("class","active");
+         document.getElementsByClassName('link-list')[0].addEventListener('click',(e) => {
             if(e.target.tagName === 'BUTTON') {
-               const removeButton = document.querySelector('.active');
-               removeButton.className = '';
-               const addButton = e.target;
-               addButton.className = 'active';
-               const display = addButton.textContent;
-               showPage(list, display);
+               (document.querySelector('.active')).className = '';
+               e.target.className = 'active';
+               showPage(list, e.target.textContent);
             } 
           });
       }    
 
       // A simple search bar function
          function insertSearchBar() {
-         const header = document.querySelector('.header');
          searchBar = `
          <label for="search" class="student-search">
                   <span>Search by name</span>
                   <input id="search" placeholder="Search by name...">
                   <button type="button" class="submit"><img src="img/icn-search.svg" alt="Search icon"></button>
                 </label>`;
-            header.insertAdjacentHTML("beforeend", searchBar);
+            (document.querySelector('.header')).insertAdjacentHTML("beforeend", searchBar);
          }
       
-      
-      // calling specific functions
+       // calling specific functions
       showPage(data, 1); 
       addPagination(data); 
       insertSearchBar(); 
       
-      
-      
-      const searchBtn = document.querySelector('button.submit');
-      const searchField = document.getElementById('search');
-      
-      searchField.addEventListener('keyup', () => {
-         let searchText = searchField.value.toUpperCase();
-         searchBtn.onclick = () => {
-            searchField.value = '';
+      document.getElementById('search').addEventListener('keyup', () => {
+         document.querySelector('button.submit').onclick = () => {
+            document.getElementById('search').value = '';
             }
 
          //filters the number of students based on the contents of the search bar
-            const filteredList = data.filter(student => {
+            itemData = data.filter(student => {
                return (
-                  student.name.first.toUpperCase().includes(searchText) ||
-                  student.name.last.toUpperCase().includes(searchText)
+                  student.name.first.toUpperCase().includes((document.getElementById('search')).value.toUpperCase()) ||
+                  student.name.last.toUpperCase().includes((document.getElementById('search')).value.toUpperCase())
                );
             });
-            itemData = filteredList;
             currentPage = 1;
             showPage(itemData, currentPage);
             addPagination(itemData);
-            
             });
-      
